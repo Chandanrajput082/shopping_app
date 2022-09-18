@@ -5,9 +5,8 @@ import ButtonField from "./base/ButtonField";
 import InputField from "./base/InputField";
 import axios from "axios";
 import { cloneDeep } from "lodash";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-// import fs from 'fs'
 
 const itemObj = {
   productname: "",
@@ -15,16 +14,14 @@ const itemObj = {
   quantityname: "",
   price: "",
   img: "",
-  };
+};
 
 function AddItems() {
   const [product, setproduct] = useState();
   const [variations, setVariations] = useState([]);
   const [numberOfVar, setNumberOfVar] = useState(0);
-
   const [allData, setAllData] = useState([]);
-  // const [addVarData, setaddVarData] = useState();
-  // const [data, SetData] = useState({});
+  const [isSaveButton, setIsSaveButton] = useState(false);
 
   const [file, setFile] = useState();
 
@@ -48,10 +45,8 @@ function AddItems() {
   }
 
   const handleChange = (e) => {
-    
     const { name, value, id } = e.target;
 
-    // console.log(id,"id");
     let varArr = cloneDeep(variations);
     const idArr = id.split("-");
 
@@ -69,11 +64,12 @@ function AddItems() {
   function handleClick() {
     let varArr = [];
     for (let i = 0; i < numberOfVar; i++) {
-      let   id = uuidv4();
-      varArr.push({ ...itemObj, id:id });  
+      let id = uuidv4();
+      varArr.push({ ...itemObj, id: id });
     }
     setVariations(varArr);
 
+    setIsSaveButton(true);
   }
 
   console.log(variations, "-------ariaons");
@@ -82,41 +78,24 @@ function AddItems() {
     navigate("/admin");
   };
   const handleSave = async (e) => {
-    // setAllData([...allData, data]);
-
-    // setaddVarData(() => {
-    //   return {
-    //     ...addVarData,
-    //     variation: variations,
-    //     ProductTitle: product,
-    //     NoOfVariation: numberOfVar,
-    //   };
-    // });
-    // variations['id'] = uuidv4()
-
-    await axios.post(" http://localhost:5000/products", {variation:variations,productTitle:product,NoOfVariation:numberOfVar});
-     goOnAdmin();
+    await axios.post(" http://localhost:5000/products", {
+      variation: variations,
+      productTitle: product,
+      NoOfVariation: numberOfVar,
+    });
+    goOnAdmin();
   };
-
-  // console.log(allData);
 
   return (
     <>
-      <h1
-        className="text-white-50 bg-dark"
-        style={{
-          textAlign: "center",
-        }}
-      >
-        Add Your Products
-      </h1>
+      <div className="text-center m-5 bg-warning p-2">
+        <span className="font-weight-bolder display-5 lead">
+          Add Your Product
+        </span>
+      </div>
+
       <div className="container ">
-        
-        <div
-          className="mt-5 "
-          style={{ display: "flex" }}
-        >
-          
+        <div className="mt-5 " style={{ display: "flex" }}>
           <InputField
             type="text"
             placeholder="Enter Product Name"
@@ -134,22 +113,19 @@ function AddItems() {
             {variations.map((variation, i) => {
               return (
                 <Items
-              
                   key={i}
                   item={variation}
                   number={i}
                   handleChange={handleChange}
                   value={allData}
                   handle={handle}
-
-
                 />
               );
-             
             })}
-           
           </ul>
-          <ButtonField label={"Save"} handleClick={handleSave} />
+          {isSaveButton && (
+            <ButtonField label={"Save"} handleClick={handleSave} />
+          )}
         </div>
       </div>
     </>

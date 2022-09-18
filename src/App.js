@@ -4,11 +4,11 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Admin from "./components/Admin";
-import User from "./components/User";
 import AddItems from "./components/AddItems";
 import Allproducts from "./components/Allproducts";
-import Shoppingitems from "./components/Shoppingitems";
 import { createContext, useState } from "react";
+import Products from "./components/Products";
+import Cart from "./components/Cart";
 
 export const CartContext = createContext();
 
@@ -21,10 +21,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/additems" element={<AddItems />} />
           <Route path="/allproducts" element={<Allproducts />} />
-          <Route path="/shoppingitems" element={<Shoppingitems />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </CartContext.Provider>
     </>
