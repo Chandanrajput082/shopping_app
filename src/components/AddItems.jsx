@@ -1,5 +1,5 @@
 import React from "react";
-import react, { useState } from "react";
+import  { useState } from "react";
 import Items from "./Items";
 import ButtonField from "./base/ButtonField";
 import InputField from "./base/InputField";
@@ -22,21 +22,19 @@ function AddItems() {
   const [numberOfVar, setNumberOfVar] = useState(0);
   const [allData, setAllData] = useState([]);
   const [isSaveButton, setIsSaveButton] = useState(false);
-
   const [file, setFile] = useState();
+  const navigate = useNavigate();
 
   function handle(e) {
-    const { name, value, id } = e.target;
+    const {  id } = e.target;
     let files = e.target.files;
     let imageUrl = null;
-    console.log(files);
     setFile(URL.createObjectURL(e.target.files[0]));
 
     let reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (e) => {
       imageUrl = e.target.result;
-
       let varArr = cloneDeep(variations);
       const idArr = id.split("-");
       varArr[idArr[1]][idArr[0]] = imageUrl;
@@ -45,11 +43,9 @@ function AddItems() {
   }
 
   const handleChange = (e) => {
-    const { name, value, id } = e.target;
-
+    const {  value, id } = e.target;
     let varArr = cloneDeep(variations);
     const idArr = id.split("-");
-
     varArr[idArr[1]][idArr[0]] = value;
     setVariations([...varArr]);
   };
@@ -57,6 +53,7 @@ function AddItems() {
   const ProductInput = (event) => {
     setproduct(event.target.value);
   };
+
   const PassIpnut = (event) => {
     setNumberOfVar(event.target.value);
   };
@@ -68,34 +65,39 @@ function AddItems() {
       varArr.push({ ...itemObj, id: id });
     }
     setVariations(varArr);
-
     setIsSaveButton(true);
   }
 
-  console.log(variations, "-------ariaons");
-  const navigate = useNavigate();
-  const goOnAdmin = () => {
+   const goOnAdmin = () => {
     navigate("/admin");
   };
+   
   const handleSave = async (e) => {
     await axios.post(" http://localhost:5000/products", {
       variation: variations,
       productTitle: product,
       NoOfVariation: numberOfVar,
     });
+    
     goOnAdmin();
   };
+   
+  let admin = localStorage.getItem('admin');
 
   return (
     <>
-      <div className="text-center m-5 bg-warning p-2">
-        <span className="font-weight-bolder display-5 lead">
-          Add Your Product
-        </span>
-      </div>
+    
+   
+{ admin ?(
+<>
+<div className="text-center m-5 bg-warning p-2">
+<p className="font-weight-bolder display-5 lead">
+  Add Your Product
+</p>
+</div>
 
       <div className="container ">
-        <div className="mt-5 " style={{ display: "flex" }}>
+        <div className="mt-5  gap-3" style={{ display: "flex" }}>
           <InputField
             type="text"
             placeholder="Enter Product Name"
@@ -128,6 +130,11 @@ function AddItems() {
           )}
         </div>
       </div>
+      </>):(
+  <p>Page not found</p>
+)}
+    
+     
     </>
   );
 }

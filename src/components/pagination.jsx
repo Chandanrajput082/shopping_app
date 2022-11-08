@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 
 let disable = false;
 
-
 const Pagination = ({ showPerPage, onPaginationChange, total }) => {
   const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     const value = showPerPage * counter;
     onPaginationChange(value - showPerPage, value);
-    
-    if(total<1){
-     disable = true
+
+    if (total < 1) {
+      disable = true;
     }
-    if(total>12){
-      disable = true
+    if (total > 12) {
+      disable = true;
     }
   }, [counter]);
 
@@ -43,7 +42,11 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
         Previous
       </button>
 
-      <button className="btn btn-primary"  disabled={disable} onClick={() => onButtonClick("next")}>
+      <button
+        className="btn btn-primary"
+        disabled={disable}
+        onClick={() => onButtonClick("next")}
+      >
         Next
       </button>
     </div>

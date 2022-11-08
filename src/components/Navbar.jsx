@@ -3,7 +3,7 @@ import {} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../App";
-import { useEffect } from "react";
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function Navbar() {
             Shopping App
           </a>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-toggle="collapse"
             data-target="#navbarText"
@@ -25,7 +25,7 @@ function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
 
           <div className="collapse navbar-collapse" id="navbarText">
@@ -33,16 +33,11 @@ function Navbar() {
               <Link to="/products" className="text-black p-2">
                 Products
               </Link>
-
-              <Link to="/admin" className="text-black p-2">
-                Admin
-              </Link>
-
-              <Link to="/cart" className="text-black p-2">
-                Cart
-                <i className="fa-solid fa-cart-shopping"></i>
-                {count}
-              </Link>
+                 <Link to="/cart" className="text-black p-2">
+                     Cart
+                     <i className="fa-solid fa-cart-shopping"></i>
+                     {count}
+                  </Link>
             </ul>
           </div>
         </nav>

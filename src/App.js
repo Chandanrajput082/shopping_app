@@ -9,6 +9,11 @@ import Allproducts from "./components/Allproducts";
 import { createContext, useState } from "react";
 import Products from "./components/Products";
 import Cart from "./components/Cart";
+import ProductData from "./components/ProductData";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export const CartContext = createContext();
 
@@ -17,6 +22,7 @@ function App() {
 
   return (
     <>
+            <ToastContainer />
       <CartContext.Provider value={{ count, setCount }}>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -26,6 +32,7 @@ function App() {
           <Route path="/allproducts" element={<Allproducts />} />
           <Route path="/cart" element={<Cart />} />
         </Routes>
+
       </CartContext.Provider>
     </>
   );

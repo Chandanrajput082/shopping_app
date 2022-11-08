@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Pagination from "./pagination";
 import { CartContext } from "../App";
@@ -16,15 +16,12 @@ function ProductData() {
     start: 0,
     end: showPerPage,
   });
-
   const navigate = useNavigate();
-
-  // console.log("count :-", count);
 
   useEffect(() => {
     getUsers();
     cartDetails();
-  }, []);
+  }, [count]);
 
   const getUsers = async () => {
     const response = await fetch("http://localhost:5000/products");
@@ -33,7 +30,9 @@ function ProductData() {
 
   const cartDetails = async () => {
     const response = await fetch("http://localhost:5000/cart");
-    setOrdersData(await response.json());
+    const data = await response.json();
+    setOrdersData(data);
+    setCount(data.length);
   };
 
   const subProducts = (element) => {
@@ -52,15 +51,26 @@ function ProductData() {
     });
     console.log(updateData, "----");
     if (updateData.length > 0) {
-      alert("Check Your Card");
+      alert("Already Add , Plz check Your Cart");
     } else {
       setCount(count + 1);
       ordersData.push(productData);
       await axios.post("http://localhost:5000/cart", productData);
     }
   };
+  const logOut = () => {
+    localStorage.removeItem("user")
+    navigate("/");
+  };
   return (
     <>
+      <div className="container ">
+        <div className="text-end ">
+          <button className="btn btn-info text-white btn-lg" onClick={logOut}>
+            Logout
+          </button>
+        </div>
+      </div>
       {users.length !== 0 ? (
         <div className="row row-cols-1 row-cols-md-4 mt-5">
           {users.slice(pagination.start, pagination.end).map((curEle, i) => {

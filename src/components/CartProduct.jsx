@@ -10,6 +10,9 @@ const CartProduct = ({
   handleDelete,
 }) => {
   const [qty, setQty] = useState(+curEle.count);
+  useEffect(() => {
+    setTotalPrice((totalPrice) => totalPrice + curEle.price * qty);
+  }, []);
 
   const handleAddQty = async () => {
     setQty((prevState) => prevState + 1);
@@ -35,9 +38,7 @@ const CartProduct = ({
     setTotalPrice((totalPrice) => totalPrice - curEle.price * 1);
   };
 
-  useEffect(() => {
-    setTotalPrice((totalPrice) => totalPrice + curEle.price * qty);
-  }, []);
+ 
 
   return (
     <>
@@ -75,7 +76,9 @@ const CartProduct = ({
           </div>
 
           <div className="text-center pt-5 w-25">
-            <button onClick={() => handleDelete(curEle.id)}>Remove</button>
+            <button onClick={() => handleDelete(curEle.id, curEle)}>
+              Remove
+            </button>
           </div>
         </div>
       </div>

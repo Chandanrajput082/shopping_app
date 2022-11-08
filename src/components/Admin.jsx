@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Routes, Route, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 
 function Admin() {
   const navigate = useNavigate();
@@ -16,27 +14,37 @@ function Admin() {
   const goOnAddItems = () => {
     navigate("/additems");
   };
+
+  const logOut = () => {
+    localStorage.removeItem("admin");
+    navigate("/");
+  };
+ 
   const fetchOrders = async () => {
     const res = await fetch("http://localhost:5000/orders");
     const data = await res.json();
     setodersdata(data);
   };
+  let admin = localStorage.getItem('admin');
+  console.log(admin);
   return (
     <>
-      <Navbar />
-      <div>
+    { admin ? (<div>
         <div className="text-center m-5 bg-warning p-2">
           <span className="font-weight-bolder display-5 lead">
             Admin Pannel
           </span>
         </div>
-        <div className="container">
-          <div className="text-end">
+        <div className="container ">
+          <div className="text-end ">
             <button
-              className="btn btn-info text-white btn-lg"
+              className="btn btn-info text-white btn-lg me-3 "
               onClick={goOnAddItems}
             >
               Add Items
+            </button>
+            <button className="btn btn-info text-white btn-lg" onClick={logOut}>
+              Logout
             </button>
           </div>
         </div>
@@ -80,6 +88,12 @@ function Admin() {
           )}
         </div>
       </div>
+
+    ):(
+      
+<p  className=" text-centre">  page not found </p>
+    ) }
+      
     </>
   );
 }

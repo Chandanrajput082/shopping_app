@@ -26,7 +26,6 @@ function Allproducts(props) {
     let updateData = ordersData.filter((item) => {
       return item.id === data.id;
     });
-    console.log(updateData, "----");
     if (updateData.length > 0) {
       alert("Check Your Card");
     } else {

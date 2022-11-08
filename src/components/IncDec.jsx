@@ -9,19 +9,15 @@ function IncDec(curEle) {
 
     setTotalPrice(totalPrice * qty);
   };
- 
 
- 
- 
   const handleReduceQty = () => {
     setQty((prevState) => {
       if (prevState !== 1) return prevState - 1;
       else return prevState;
     });
   };
-  console.log(qty,"jjj");
 
-  return (
+ return (
     <div>
       <div>
         <i className="fa-sharp fa-solid fa-minus" onClick={handleReduceQty}></i>
@@ -30,8 +26,6 @@ function IncDec(curEle) {
       </div>
     </div>
   );
-
 }
-
 
 export default IncDec;
