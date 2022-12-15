@@ -18,7 +18,7 @@ function Login() {
 
   const handleChange = (e) => {
     let { value, name } = e.target;
-    setFormData((prevData) => {
+    setFormData((prevData) => { 
       return { ...prevData, [name]: value };
     });
   };
